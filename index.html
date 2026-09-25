@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#04060d">
+<title>Đèn Trung Thu</title>
+<meta name="description" content="Thắp một ngọn đèn, ước một điều ước.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&text=%E5%A4%A7%E5%A5%BD%E3%81%8D%E3%81%A0%E3%83%A8%E2%99%A1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- shared gradients for the floating river lanterns -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="lanternLight" cx=".5" cy=".45" r=".55">
+      <stop offset="0" stop-color="#fff6d0" stop-opacity=".95"/>
+      <stop offset=".4" stop-color="#ffd27a" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="candleGlow">
+      <stop offset="0" stop-color="#fff3c8" stop-opacity=".95"/>
+      <stop offset=".35" stop-color="#ffc56b" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#ff9a3c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="waterGlow">
+      <stop offset="0" stop-color="#ffc47a" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#ffc47a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<main id="stage" aria-label="Đèn Trung Thu">
+  <div id="town">
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div id="world" aria-hidden="true">
+      <div class="peek"><img src="assets/creature-sticker.png" alt=""></div>
+    </div>
+  </div>
+  <canvas id="dark" aria-hidden="true"></canvas>
+  <div id="sky" aria-hidden="true">
+    <div class="s-moon"></div>
+    <div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div>
+  </div>
+  <div id="fog" aria-hidden="true"><i></i><i></i></div>
+  <div id="rig" aria-hidden="true"></div>
+  <div id="vignette" aria-hidden="true"></div>
+
+  <div id="grip-ring" aria-hidden="true"></div>
+  <button id="ember-hit" type="button" aria-label="Chạm vào đốm sáng"></button>
+  <p id="sound-note">nhớ bật âm thanh nha</p>
+
+  <div id="tray" aria-live="polite">
+    <div class="slots"><span class="slot">?</span><span class="slot">?</span><span class="slot">?</span><span class="slot">?</span><span class="slot">?</span></div>
+    <div class="count">0 / 5</div>
+  </div>
+
+  <div id="hint" aria-live="polite"><span class="hint-a"></span><span class="hint-b"></span></div>
+
+  <div id="viewer" role="dialog" aria-modal="true" aria-label="Một mảnh ký ức">
+    <figure class="card"><img alt=""><figcaption></figcaption></figure>
+    <p class="viewer-hint">chạm để cất vào túi ✦</p>
+  </div>
+
+  <div id="dialog" role="dialog" aria-label="Sinh vật xanh">
+    <div class="bubble">
+      <p class="dlg-text" aria-hidden="true"></p>
+      <p id="dlg-sr" class="sr-only" aria-live="polite"></p>
+      <span class="next" aria-hidden="true">▾</span>
+      <button class="letter-btn" type="button">Ren có gửi cậu một lá thư</button>
+    </div>
+    <img class="dlg-creature" src="assets/creature-sticker.png" alt="Một sinh vật nhỏ màu xanh">
+  </div>
+</main>
+
+<section id="letter" aria-label="Thư của Ren" tabindex="-1">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="letter-inner">
+    <header class="l-head">
+      <div class="moon" aria-hidden="true"></div>
+      <p class="l-kicker reveal">Trung thu · 25/09/2026</p>
+      <h1 class="l-title reveal">Gửi An,</h1>
+      <p class="l-cue reveal" aria-hidden="true">cuộn xuống ↓</p>
+    </header>
+
+    <article class="l-body">
+      <p class="lead reveal">I hope we can celebrate these small moments together again in the future.&nbsp;.&nbsp;.</p>
+
+      <div class="pair reveal">
+        <figure class="pol" style="--r:-4deg"><img src="assets/photo-3.jpg" alt="Hai đứa trong rạp phim" loading="lazy"><figcaption>movie date</figcaption></figure>
+        <figure class="pol" style="--r:3deg"><img src="assets/photo-1.jpg" alt="Gọi video cho nhau" loading="lazy"><figcaption>silly selfie owo</figcaption></figure>
+      </div>
+
+      <p class="reveal">I’ve collected some of my personal favorite photos.</p>
+
+      <p class="reveal">Tonight I can’t be right there next to you, but we’re still under the same moon.</p>
+
+      <div class="pair reveal">
+        <figure class="pol" style="--r:3deg"><img src="assets/photo-2.jpg" alt="Cả hội chụp ảnh trong thang máy" loading="lazy"><figcaption>it’s been a while</figcaption></figure>
+        <figure class="pol fit" style="--r:-3deg"><img src="assets/photo-4.jpg" alt="Tranh vẽ tay hai đứa" loading="lazy"><figcaption>Picasso painting</figcaption></figure>
+      </div>
+
+      <p class="reveal">We couldn’t make the lantern together, so here is my very original homemade lantern for you. Someday, let’s go to Hội An and set a lantern down on the river together.</p>
+
+      <div class="pair single reveal">
+        <figure class="pol" style="--r:-2deg"><img src="assets/photo-5.jpg" alt="Hai nhân vật trong game đứng cạnh nhau" loading="lazy"><figcaption>yeah 12 hours was something else</figcaption></figure>
+      </div>
+
+      <div class="reveal">
+        <p class="thanks">Thank you for being my light, even on the gloomiest nights.</p>
+        <p class="whisper">(straight out of a movie line)</p>
+      </div>
+      <p class="l-sign reveal">&mdash; Ren</p>
+    </article>
+
+    <section class="l-river" aria-label="Dòng sông đầy đèn lồng">
+      <svg class="far-bank" viewBox="0 0 2000 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+      <div class="reflection" aria-hidden="true"><i></i></div>
+      <div class="l-drift" aria-hidden="true"></div>
+      <div class="kotoba">
+        <div class="k-bubble" lang="ja">大好きだヨ <span class="heart">♡</span></div>
+        <div class="k-float">
+          <div class="k-lantern" aria-hidden="true"></div>
+          <img src="assets/creature-sticker.png" alt="Sinh vật xanh ngồi trên thuyền, cầm đèn ông sao">
+          <!-- a slightly scuffed hand-made boat -->
+          <svg class="k-boat" viewBox="0 0 300 124" aria-hidden="true">
+            <defs>
+              <linearGradient id="kb-wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a06a3a"/><stop offset="1" stop-color="#5a3419"/></linearGradient>
+            </defs>
+            <ellipse cx="150" cy="112" rx="132" ry="9" fill="rgba(0,0,0,.35)"/>
+            <path d="M14 22 C42 31 90 41 150 40 C213 39 262 30 290 8 C285 41 262 77 222 94 C184 109 115 108 76 96 C43 85 21 58 14 22 Z" fill="url(#kb-wood)" stroke="#1d1410" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M25 49 C69 64 121 70 160 69 C210 67 250 58 280 34" stroke="#3b2413" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+            <path d="M45 76 C85 88 131 91 168 89 C206 86 238 78 261 62" stroke="#3b2413" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+            <path d="M18 28 C45 36 93 46 151 45 C213 44 261 34 286 14" stroke="#c0392b" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M103 71 l25 -2 l2 17 l-26 3 z" fill="#c29062" stroke="#1d1410" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M108 74 l3 3 M115 73 l3 3 M122 72 l3 3 M109 84 l3 -3 M117 83 l3 -3" stroke="#1d1410" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M190 80 l6 7 M196 79 l-7 8" stroke="#1d1410" stroke-width="2" stroke-linecap="round"/>
+            <ellipse cx="248" cy="44" rx="14" ry="8" fill="#f6ecd6" stroke="#1d1410" stroke-width="2.4" transform="rotate(-18 248 44)"/>
+            <circle cx="251" cy="43" r="4.2" fill="#1d1410"/>
+          </svg>
+        </div>
+      </div>
+      <p class="l-river-hint">chạm mặt nước để thả một chiếc đèn ước ✦</p>
+    </section>
+  </div>
+</section>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<button id="mute" type="button" aria-pressed="false" aria-label="Tắt âm thanh">
+  <svg class="on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+  <svg class="off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>
+</button>
+
+<div class="grain" aria-hidden="true"></div>
+
+<script src="js/audio.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

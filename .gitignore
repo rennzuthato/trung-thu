@@ -1,0 +1,6 @@
+# full-size originals and local-only files — the site doesn't use them
+assets/src/
+assets/creature.png
+*.url
+*.zip
+.claude/
